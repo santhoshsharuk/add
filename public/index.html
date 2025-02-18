@@ -50,8 +50,15 @@
                 return;
             }
 
-            let response = await fetch(`https://santhoshsharuk-add.hf.space/add?a=${num1}&b=${num2}`);
-            let data = await response.json();
+            // Get API URL from Netlify function
+            const apiUrl = `${window.location.origin}/.netlify/functions/env`;
+
+            let response = await fetch(apiUrl);
+            let envData = await response.json();
+            let apiBaseUrl = envData.API_URL;
+
+            let addResponse = await fetch(`${apiBaseUrl}/add?a=${num1}&b=${num2}`);
+            let data = await addResponse.json();
             document.getElementById("result").innerText = "Result: " + data.result;
         }
     </script>
